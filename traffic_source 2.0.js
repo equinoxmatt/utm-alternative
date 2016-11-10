@@ -1,4 +1,3 @@
-<script>
 (function(sourceCookieName, campaignCookieName, domain){
 	/* Getting started:
 	 * Change the site_hostname from "subdomain.domain.com" to your own website
@@ -109,13 +108,13 @@
 				traffic_source = urlParamSRC + traffic_source;  //use it, add it to the variable
 				//if no SRC, check if there is a REFERRER
 			} else if (isNotNullOrEmpty(document.referrer)){
-
+				traffic_source = removeProtocol(document.referrer);
 			} else {
 				traffic_source = "none or direct" + traffic_source;
 			}
 
 			if (isNotNullOrEmpty(urlParamCAMPAIGN)) { //if there is a SRC query string parameter
-				traffic_campaign = urlParamSRC + traffic_campaign;  //use it, add it to the variable
+				traffic_campaign = urlParamCAMPAIGN;  //use it, add it to the variable
 				//if no SRC, check if there is a REFERRER
 			} else {
 				traffic_campaign = "none";
@@ -148,12 +147,11 @@
 			}
 
 			//Update the cookie with the new traffic_source of the new user visit
-			updated_traffic_source = traffic_source + traffic_source_COOKIE_TOKEN_SEPARATOR + getCookie(sourceCookieName);
+			var updated_traffic_source = traffic_source + traffic_source_COOKIE_TOKEN_SEPARATOR + getCookie(sourceCookieName);
 			setCookie(sourceCookieName, updated_traffic_source);
 
-			updated_traffic_campaign = traffic_campaign + traffic_source_COOKIE_TOKEN_SEPARATOR + getCookie(campaignCookieName);
+			 var updated_traffic_campaign = traffic_campaign + traffic_source_COOKIE_TOKEN_SEPARATOR + getCookie(campaignCookieName);
 			setCookie(campaignCookieName, updated_traffic_campaign);
 		}  //end of CASE B
 	}
 })("traffic_source", "campaign_source", ".YOUR-DOMAIN-HERE.com");
-</script>
